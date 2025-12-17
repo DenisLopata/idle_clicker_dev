@@ -1,5 +1,7 @@
-extends Node
 class_name ProductionSystem
+extends Node
+
+signal rates_updated(rates: Dictionary)
 
 @export var rules: Array[ProductionRule] = []
 
@@ -9,6 +11,13 @@ var _last_seen_amount: Dictionary = {}
 var _modifiers: Dictionary = {}
 
 var _game_state: GameState
+
+# Rate tracking
+var _rate_window: float = 1.0  # Calculate rate over 1 second
+var _rate_accumulator: Dictionary = {}  # ResourceType -> accumulated amount
+var _current_rates: Dictionary = {}  # ResourceType -> rate per second
+var _rate_timer: float = 0.0
+var _bug_penalty: float = 1.0  # Current bug penalty multiplier
 
 func initialize(game_state: GameState) -> void:
 	_game_state = game_state
@@ -21,7 +30,15 @@ func initialize(game_state: GameState) -> void:
 	for rule in rules:
 		_accumulators[rule.id] = 0.0
 		_last_seen_amount[rule.id] = _game_state.get_resource(rule.source)
-	
+
+func _process(delta: float) -> void:
+	_rate_timer += delta
+	if _rate_timer >= _rate_window:
+		_current_rates = _rate_accumulator.duplicate()
+		_rate_accumulator.clear()
+		_rate_timer = 0.0
+		rates_updated.emit(_current_rates)
+
 func _on_resource_changed(
 	type: ResourceTypes.ResourceType,
 	_new_value: float
@@ -72,10 +89,13 @@ func _process_amount(rule: ProductionRule, amount: float) -> void:
 		return
 
 	_accumulators[rule.id] = acc - times * rule.source_amount
-	_game_state.add_resource(
-		rule.target,
-		times * rule.target_amount
-	)
+	var produced_amount = times * rule.target_amount
+	_game_state.add_resource(rule.target, produced_amount)
+
+	# Track for rate calculation
+	if not _rate_accumulator.has(rule.target):
+		_rate_accumulator[rule.target] = 0.0
+	_rate_accumulator[rule.target] += produced_amount
 
 func add_modifier(modifier: RuleModifier) -> void:
 	if not _modifiers.has(modifier.rule_id):
@@ -92,22 +112,27 @@ func _get_rule_multiplier(rule: ProductionRule) -> float:
 
 	return max(result, 0.0)
 
+func get_bug_penalty() -> float:
+	return _bug_penalty
+
 func update_bug_penalties() -> void:
 	var bugs := _game_state.get_resource(ResourceTypes.ResourceType.BUGS)
 
-	# Remove previous BugPenaltyModifiers first
+	# Calculate penalty once (same for all rules)
+	var stacks := int(bugs / 10)
+	var penalty := 1.0 - stacks * 0.05
+	penalty = max(penalty, 0.1)  # never go below 10% efficiency
+	_bug_penalty = penalty
+
+	# Remove previous BugPenaltyModifiers and apply new ones
 	for rule in rules:
 		if _modifiers.has(rule.id):
 			_modifiers[rule.id] = _modifiers[rule.id].filter(func(m):
 				return m is not BugPenaltyModifier
 			)
 
-		# Apply new Bug penalty if there are bugs
+		# Apply Bug penalty if there are bugs
 		if bugs > 0:
-			var stacks := int(bugs / 10) # or use BugPenaltyModifier.bugs_per_stack
-			var penalty := 1.0 - stacks * 0.05
-			penalty = max(penalty, 0.1) # never go below 10% efficiency
-
 			var mod := BugPenaltyModifier.new()
 			mod.rule_id = rule.id
 			mod.multiplier = penalty

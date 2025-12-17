@@ -30,7 +30,7 @@ func _ready() -> void:
 	
 	production_system.initialize(GameState)
 	
-	resource_hud.initialize(GameState)
+	resource_hud.initialize(GameState, production_system)
 
 func _on_resource_changed(_type: int, _new_value: float) -> void:
 	# Update UI, show all resources in a single label or dedicated labels

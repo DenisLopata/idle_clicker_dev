@@ -91,4 +91,5 @@ func _update_visual_state() -> void:
 
 func _update_cost_label() -> void:
 	if cost_label and not unlocked_action:
-		cost_label.text = "Cost: %d %s" % [unlock_cost, str(unlock_cost_type)]
+		var type_txt: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
+		cost_label.text = "Cost: %d %s" % [unlock_cost, str(type_txt)]
