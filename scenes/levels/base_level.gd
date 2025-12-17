@@ -29,8 +29,11 @@ func _ready() -> void:
 	upgrade_panel.upgrade_purchased.connect(_on_upgrade_purchased)
 	
 	production_system.initialize(GameState)
-	
+
 	resource_hud.initialize(GameState, production_system)
+
+	# Load saved game if exists
+	SaveManager.load_game()
 
 func _on_resource_changed(_type: int, _new_value: float) -> void:
 	# Update UI, show all resources in a single label or dedicated labels
@@ -41,6 +44,9 @@ func _on_resource_changed(_type: int, _new_value: float) -> void:
 	resource_label.text = text
 
 func _on_upgrade_purchased(id: String) -> void:
+	# Save on significant events
+	SaveManager.save_game()
+
 	match id:
 		"auto_clicker_unlock":
 			# AutoClicker upgrade bought, enable related generators
