@@ -28,6 +28,12 @@ window/size/window_height_override=720
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[file_customization]
+
+folder_colors={
+"res://scenes/": "blue"
+}
+
 [gui]
 
 theme/custom_font="uid://en1p7typ1sik"

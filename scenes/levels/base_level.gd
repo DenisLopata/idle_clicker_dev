@@ -3,6 +3,7 @@ extends Control
 @onready var resource_label: Label = $ResourceLabel
 @onready var upgrade_panel: UpgradePanel = $UpgradeContainer/UpgradePanel
 @onready var production_system: ProductionSystem = $ProductionSystem
+@onready var resource_hud: ResourceHUD = $UI/ResourceHUD
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -28,6 +29,8 @@ func _ready() -> void:
 	upgrade_panel.upgrade_purchased.connect(_on_upgrade_purchased)
 	
 	production_system.initialize(GameState)
+	
+	resource_hud.initialize(GameState)
 
 func _on_resource_changed(_type: int, _new_value: float) -> void:
 	# Update UI, show all resources in a single label or dedicated labels

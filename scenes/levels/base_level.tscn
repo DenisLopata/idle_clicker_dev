@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsppjvtfm0iqa"]
+[gd_scene load_steps=13 format=3 uid="uid://dsppjvtfm0iqa"]
 
 [ext_resource type="Script" uid="uid://cb4cmtxb2d70f" path="res://scenes/levels/base_level.gd" id="1_md458"]
 [ext_resource type="PackedScene" uid="uid://dfon2ykx74oiy" path="res://scenes/components/action_button/action_button.tscn" id="2_uk53i"]
@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://dc8uc3uafebqv" path="res://data/production_rules/loc_to_bug.tres" id="7_53c65"]
 [ext_resource type="Resource" uid="uid://cdeh1ufdqyspy" path="res://data/production_rules/commit_loc_to_features.tres" id="8_43bxi"]
 [ext_resource type="Resource" uid="uid://ch0336ogx401c" path="res://data/production_rules/ship_features_to_money.tres" id="9_j7gcg"]
+[ext_resource type="PackedScene" uid="uid://cbbobv6d7781w" path="res://scenes/UI/resource_hud/resource_hud.tscn" id="11_qhwlw"]
+[ext_resource type="PackedScene" uid="uid://cwojeee861rxk" path="res://scenes/UI/resource_hud/resource_row.tscn" id="12_0caop"]
 
 [node name="BaseLevel" type="Control"]
 layout_mode = 3
@@ -21,6 +23,7 @@ grow_vertical = 2
 script = ExtResource("1_md458")
 
 [node name="ResourceLabel" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 16.0
@@ -56,6 +59,7 @@ offset_left = 145.0
 offset_top = 148.0
 offset_right = 205.0
 offset_bottom = 188.0
+theme = ExtResource("3_j7gcg")
 action_id = "commit_button"
 unlock_cost = 50.0
 resource_per_click = 0.0
@@ -67,6 +71,7 @@ offset_left = 153.0
 offset_top = 210.0
 offset_right = 213.0
 offset_bottom = 250.0
+theme = ExtResource("3_j7gcg")
 action_id = "ship_button"
 unlock_cost_type = 2
 unlock_cost = 1.0
@@ -99,4 +104,11 @@ layout_mode = 2
 script = ExtResource("5_o1chu")
 rules = Array[ExtResource("6_h4ce7")]([ExtResource("7_53c65"), ExtResource("8_43bxi"), ExtResource("9_j7gcg")])
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ResourceHUD" parent="UI" instance=ExtResource("11_qhwlw")]
+anchors_preset = 10
+anchor_bottom = 0.0
+offset_bottom = 40.0
+grow_vertical = 1
+resource_row_scene = ExtResource("12_0caop")
