@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=3 uid="uid://dsppjvtfm0iqa"]
+
+[ext_resource type="Script" uid="uid://cb4cmtxb2d70f" path="res://scenes/levels/base_level.gd" id="1_md458"]
+[ext_resource type="PackedScene" uid="uid://dfon2ykx74oiy" path="res://scenes/components/action_button/action_button.tscn" id="2_uk53i"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="3_j7gcg"]
+[ext_resource type="PackedScene" uid="uid://clindmg85x3ke" path="res://scenes/components/passive_generator/passive_generator.tscn" id="3_ukglk"]
+[ext_resource type="PackedScene" uid="uid://dufomiuw8cy0a" path="res://scenes/UI/upgrade_panel/upgrade_panel.tscn" id="4_wwrw0"]
+[ext_resource type="Script" uid="uid://rbsh3slbuk14" path="res://scripts/production_system/production_system.gd" id="5_o1chu"]
+[ext_resource type="Script" uid="uid://bsr8a66e1kq5u" path="res://scripts/production_rule/production_rule.gd" id="6_h4ce7"]
+[ext_resource type="Resource" uid="uid://dc8uc3uafebqv" path="res://data/production_rules/loc_to_bug.tres" id="7_53c65"]
+[ext_resource type="Resource" uid="uid://cdeh1ufdqyspy" path="res://data/production_rules/commit_loc_to_features.tres" id="8_43bxi"]
+[ext_resource type="Resource" uid="uid://ch0336ogx401c" path="res://data/production_rules/ship_features_to_money.tres" id="9_j7gcg"]
+
+[node name="BaseLevel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_md458")
+
+[node name="ResourceLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 16.0
+
+[node name="ActionButton" parent="." instance=ExtResource("2_uk53i")]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 41.0
+offset_right = 200.0
+offset_bottom = 81.0
+theme = ExtResource("3_j7gcg")
+theme_type_variation = &"FlatButton"
+action_id = "loc_button"
+unlock_cost = 0.0
+unlocked_action = true
+
+[node name="ActionButton2" parent="." instance=ExtResource("2_uk53i")]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 92.0
+offset_right = 202.0
+offset_bottom = 132.0
+theme = ExtResource("3_j7gcg")
+action_id = "bug_button"
+resource_type = 1
+resource_per_click = 0.0
+action_cost_type = 1
+action_cost = 1.0
+
+[node name="ActionButton3" parent="." instance=ExtResource("2_uk53i")]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 148.0
+offset_right = 205.0
+offset_bottom = 188.0
+action_id = "commit_button"
+unlock_cost = 50.0
+resource_per_click = 0.0
+action_cost = 50.0
+
+[node name="ActionButton4" parent="." instance=ExtResource("2_uk53i")]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 210.0
+offset_right = 213.0
+offset_bottom = 250.0
+action_id = "ship_button"
+unlock_cost_type = 2
+unlock_cost = 1.0
+resource_per_click = 0.0
+action_cost_type = 2
+action_cost = 1.0
+
+[node name="PassiveGenerator" parent="." instance=ExtResource("3_ukglk")]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 203.0
+offset_right = 74.0
+offset_bottom = 233.0
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="UpgradePanel" parent="UpgradeContainer" instance=ExtResource("4_wwrw0")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="ProductionSystem" type="Node" parent="."]
+script = ExtResource("5_o1chu")
+rules = Array[ExtResource("6_h4ce7")]([ExtResource("7_53c65"), ExtResource("8_43bxi"), ExtResource("9_j7gcg")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

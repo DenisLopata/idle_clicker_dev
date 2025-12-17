@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ProductionRule" load_steps=2 format=3 uid="uid://cdeh1ufdqyspy"]
+
+[ext_resource type="Script" uid="uid://bsr8a66e1kq5u" path="res://scripts/production_rule/production_rule.gd" id="1_wpyga"]
+
+[resource]
+script = ExtResource("1_wpyga")
+id = "commit_loc_to_features"
+target = 2
+source_amount = 50.0
+trigger = 1
+metadata/_custom_type_script = "uid://bsr8a66e1kq5u"

@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv4ate2xmc7cp"]
+
+[ext_resource type="Script" uid="uid://c81qyaqvsdqff" path="res://scenes/components/upgrade_button/upgrade_button.gd" id="1_ol507"]
+
+[node name="UpgradeButton" type="Button"]
+custom_minimum_size = Vector2(60, 40)
+offset_right = 60.0
+offset_bottom = 40.0
+script = ExtResource("1_ol507")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 16.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 12.0
+offset_right = 60.0
+offset_bottom = 28.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 60.0
+offset_bottom = 40.0
+horizontal_alignment = 1
+vertical_alignment = 1

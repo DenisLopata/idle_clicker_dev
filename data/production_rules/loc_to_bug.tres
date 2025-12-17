@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ProductionRule" load_steps=2 format=3 uid="uid://dc8uc3uafebqv"]
+
+[ext_resource type="Script" uid="uid://bsr8a66e1kq5u" path="res://scripts/production_rule/production_rule.gd" id="1_3no0f"]
+
+[resource]
+script = ExtResource("1_3no0f")
+id = "loc_to_bug"
+target = 1
+source_amount = 10.0
+metadata/_custom_type_script = "uid://bsr8a66e1kq5u"

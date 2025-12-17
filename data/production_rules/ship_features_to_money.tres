@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProductionRule" load_steps=2 format=3 uid="uid://ch0336ogx401c"]
+
+[ext_resource type="Script" uid="uid://bsr8a66e1kq5u" path="res://scripts/production_rule/production_rule.gd" id="1_lf0lt"]
+
+[resource]
+script = ExtResource("1_lf0lt")
+id = "ship_features_to_money"
+source = 2
+target = 3
+target_amount = 10.0
+trigger = 1
+metadata/_custom_type_script = "uid://bsr8a66e1kq5u"

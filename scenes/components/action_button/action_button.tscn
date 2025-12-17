@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfon2ykx74oiy"]
+
+[ext_resource type="Script" uid="uid://cf2m0uamsnixf" path="res://scenes/components/action_button/action_button.gd" id="1_qamgn"]
+[ext_resource type="PackedScene" uid="uid://bjll4hulbwb2t" path="res://scenes/components/auto_clicker/AutoClicker.tscn" id="2_ptr31"]
+
+[node name="ActionButton" type="Button"]
+offset_right = 60.0
+offset_bottom = 40.0
+script = ExtResource("1_qamgn")
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 16.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 42.0
+offset_right = 61.0
+offset_bottom = 82.0
+
+[node name="AutoClicker" parent="." instance=ExtResource("2_ptr31")]
+target_button = NodePath("..")

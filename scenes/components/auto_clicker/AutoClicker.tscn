@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjll4hulbwb2t"]
+
+[ext_resource type="Script" uid="uid://ds11cdml75a77" path="res://scenes/components/auto_clicker/auto_clicker.gd" id="1_cq5jn"]
+
+[node name="AutoClicker" type="Node"]
+script = ExtResource("1_cq5jn")
+
+[node name="Timer" type="Timer" parent="."]

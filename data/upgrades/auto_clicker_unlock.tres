@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeEntry" load_steps=2 format=3 uid="uid://5n5mx47rgyju"]
+
+[ext_resource type="Script" uid="uid://dxhptqlrd8qjj" path="res://scripts/upgrades/upgrade_entry.gd" id="1_ryhue"]
+
+[resource]
+script = ExtResource("1_ryhue")
+id = "auto_clicker_unlock"
+title = "Auto Clicker"
+description = "Automatically clicks the main button once per second."
+cost = 50
+metadata/_custom_type_script = "uid://dxhptqlrd8qjj"

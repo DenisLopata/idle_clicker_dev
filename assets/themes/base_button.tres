@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://ci8nn6qjjfjll"]
+
+[ext_resource type="FontFile" uid="uid://b4olwuv0uv3ia" path="res://assets/fonts/pokemon_classic/Pokemon Classic.ttf" id="1_638oq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bd4s6"]
+bg_color = Color(0.43137255, 0.39607844, 0.5019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhwlw"]
+bg_color = Color(0.43137255, 0.37254903, 0.56078434, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7gcg"]
+bg_color = Color(0.3529412, 0.3019608, 0.45882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0caop"]
+bg_color = Color(0.2901961, 0.23921569, 0.3882353, 1)
+
+[resource]
+default_font = ExtResource("1_638oq")
+default_font_size = 8
+Button/font_sizes/font_size = 8
+Button/fonts/font = ExtResource("1_638oq")
+Button/styles/disabled = SubResource("StyleBoxFlat_bd4s6")
+Button/styles/hover = SubResource("StyleBoxFlat_qhwlw")
+Button/styles/normal = SubResource("StyleBoxFlat_j7gcg")
+Button/styles/pressed = SubResource("StyleBoxFlat_0caop")
