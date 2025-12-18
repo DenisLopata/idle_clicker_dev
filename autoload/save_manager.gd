@@ -3,8 +3,10 @@ class_name SaveManagerClass
 
 signal game_saved
 signal game_loaded
+signal offline_progress_calculated(elapsed_seconds: float)
 
 const SAVE_PATH := "user://savegame.save"
+const TIMESTAMP_KEY := "_timestamp"
 
 @export var auto_save_interval: float = 30.0
 
@@ -35,6 +37,9 @@ func unregister(node: Node) -> void:
 
 func save_game() -> void:
 	var save_data := {}
+
+	# Save timestamp for offline progress
+	save_data[TIMESTAMP_KEY] = Time.get_unix_time_from_system()
 
 	for node in _saveables:
 		if node.has_method("get_save_data"):
@@ -69,9 +74,25 @@ func load_game() -> bool:
 
 	var save_data: Dictionary = json.data
 
+	# Load node data first
 	for node in _saveables:
 		if node.has_method("load_save_data") and save_data.has(node.name):
 			node.load_save_data(save_data[node.name])
+
+	# Calculate offline progress
+	if save_data.has(TIMESTAMP_KEY):
+		var saved_time: float = save_data[TIMESTAMP_KEY]
+		var current_time := Time.get_unix_time_from_system()
+		var elapsed_seconds := current_time - saved_time
+
+		if elapsed_seconds > 0:
+			print("[SaveManager] Offline for %.1f seconds" % elapsed_seconds)
+			offline_progress_calculated.emit(elapsed_seconds)
+
+			# Call apply_offline_progress on nodes that support it
+			for node in _saveables:
+				if node.has_method("apply_offline_progress"):
+					node.apply_offline_progress(elapsed_seconds)
 
 	game_loaded.emit()
 	print("[SaveManager] Game loaded")

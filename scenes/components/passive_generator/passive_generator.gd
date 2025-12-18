@@ -33,6 +33,12 @@ func _ready() -> void:
 	_update_visual_state()
 	_update_cost_label()
 
+	# Register for save/load
+	SaveManager.register(self)
+
+func _exit_tree() -> void:
+	SaveManager.unregister(self)
+
 
 func _on_pressed() -> void:
 	if unlocked_generator:
@@ -84,3 +90,17 @@ func _update_cost_label() -> void:
 func _on_tick() -> void:
 	if unlocked_generator:
 		GameState.add_resource(resource_type, resource_per_tick)
+
+# Save/Load interface
+func get_save_data() -> Dictionary:
+	return {
+		"unlocked": unlocked_generator
+	}
+
+func load_save_data(data: Dictionary) -> void:
+	if data.has("unlocked") and data["unlocked"]:
+		unlocked_generator = true
+		disabled = false
+		timer.start()
+		_update_visual_state()
+		_update_cost_label()
