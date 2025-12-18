@@ -16,12 +16,17 @@ signal performed(action_id: String)
 @export var action_cost: float = 0.0
 
 @export var unlocked_action: bool = false
+@export var hidden_on_start: bool = false
 
 @onready var cost_label: Label = $CostLabel if has_node("CostLabel") else null
 @onready var name_label: Label = $NameLabel
 
 
 func _ready() -> void:
+	# Hide if configured to start hidden (for progressive unlock)
+	if hidden_on_start:
+		hide()
+
 	# Keep button clickable even when locked (important!)
 	disabled = false
 
@@ -30,8 +35,13 @@ func _ready() -> void:
 
 	_update_visual_state()
 	_update_cost_label()
-	
+
 	name_label.text = action_id
+
+func reveal() -> void:
+	show()
+	# Optional: add animation later
+	print("[ActionButton] Revealed: %s" % action_id)
 
 
 func _on_pressed() -> void:
