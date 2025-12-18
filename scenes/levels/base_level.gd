@@ -5,6 +5,8 @@ extends Control
 @onready var production_system: ProductionSystem = $ProductionSystem
 @onready var resource_hud: ResourceHUD = $UI/ResourceHUD
 @onready var progression_manager: ProgressionManager = $ProgressionManager
+@onready var reset_button: Button = $UI/ResetButton
+@onready var reset_confirm_dialog: ConfirmationDialog = $UI/ResetConfirmDialog
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -39,6 +41,10 @@ func _ready() -> void:
 	# Initialize progression system
 	progression_manager.initialize(GameState, self)
 	progression_manager.node_revealed.connect(_on_node_revealed)
+
+	# Wire up reset button
+	reset_button.pressed.connect(_on_reset_button_pressed)
+	reset_confirm_dialog.confirmed.connect(_on_reset_confirmed)
 
 	# Load saved game if exists
 	SaveManager.load_game()
@@ -87,3 +93,9 @@ func _find_nodes_by_class(node: Node, class_name_str: String) -> Array[Node]:
 	for child in node.get_children():
 		result.append_array(_find_nodes_by_class(child, class_name_str))
 	return result
+
+func _on_reset_button_pressed() -> void:
+	reset_confirm_dialog.popup_centered()
+
+func _on_reset_confirmed() -> void:
+	SaveManager.reset_game()

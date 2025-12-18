@@ -42,7 +42,7 @@ func save_game() -> void:
 	save_data[TIMESTAMP_KEY] = Time.get_unix_time_from_system()
 
 	for node in _saveables:
-		if node.has_method("get_save_data"):
+		if is_instance_valid(node) and node.has_method("get_save_data"):
 			var node_data = node.get_save_data()
 			save_data[node.name] = node_data
 
@@ -76,7 +76,7 @@ func load_game() -> bool:
 
 	# Load node data first
 	for node in _saveables:
-		if node.has_method("load_save_data") and save_data.has(node.name):
+		if is_instance_valid(node) and node.has_method("load_save_data") and save_data.has(node.name):
 			node.load_save_data(save_data[node.name])
 
 	# Calculate offline progress
@@ -91,7 +91,7 @@ func load_game() -> bool:
 
 			# Call apply_offline_progress on nodes that support it
 			for node in _saveables:
-				if node.has_method("apply_offline_progress"):
+				if is_instance_valid(node) and node.has_method("apply_offline_progress"):
 					node.apply_offline_progress(elapsed_seconds)
 
 	game_loaded.emit()
@@ -105,6 +105,15 @@ func delete_save() -> void:
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(SAVE_PATH)
 		print("[SaveManager] Save deleted")
+
+func reset_game() -> void:
+	delete_save()
+	# Reset GameState (autoload persists across scene reloads)
+	GameState.reset()
+	# Clear saveables (they'll re-register after scene reload)
+	_saveables.clear()
+	# Reload the current scene to reset all state
+	get_tree().reload_current_scene()
 
 func _on_focus_lost() -> void:
 	save_game()

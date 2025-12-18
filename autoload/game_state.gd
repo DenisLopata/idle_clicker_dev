@@ -65,3 +65,7 @@ func load_save_data(data: Dictionary) -> void:
 		var type := int(type_str)
 		if resources.has(type):
 			set_resource(type, data[type_str])
+
+func reset() -> void:
+	for type in resources.keys():
+		set_resource(type, 0.0)

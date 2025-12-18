@@ -126,3 +126,23 @@ anchor_bottom = 0.0
 offset_bottom = 40.0
 grow_vertical = 1
 resource_row_scene = ExtResource("12_0caop")
+
+[node name="ResetButton" type="Button" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -32.0
+offset_right = 108.0
+offset_bottom = -8.0
+grow_vertical = 0
+theme = ExtResource("3_j7gcg")
+text = "Reset Progress"
+
+[node name="ResetConfirmDialog" type="ConfirmationDialog" parent="UI"]
+title = "Reset Progress"
+initial_position = 1
+size = Vector2i(300, 100)
+theme = ExtResource("3_j7gcg")
+ok_button_text = "Reset"
+dialog_text = "Are you sure you want to reset all progress? This cannot be undone."

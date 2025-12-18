@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://clindmg85x3ke"]
+[gd_scene load_steps=3 format=3 uid="uid://clindmg85x3ke"]
 
 [ext_resource type="Script" uid="uid://bn3bxbf4am5ej" path="res://scenes/components/passive_generator/passive_generator.gd" id="1_bck8p"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="2_theme"]
 
 [node name="PassiveGenerator" type="Button"]
 offset_right = 60.0
 offset_bottom = 30.0
+theme = ExtResource("2_theme")
 script = ExtResource("1_bck8p")
 
 [node name="CostLabel" type="Label" parent="."]

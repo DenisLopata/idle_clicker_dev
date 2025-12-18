@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfon2ykx74oiy"]
+[gd_scene load_steps=4 format=3 uid="uid://dfon2ykx74oiy"]
 
 [ext_resource type="Script" uid="uid://cf2m0uamsnixf" path="res://scenes/components/action_button/action_button.gd" id="1_qamgn"]
 [ext_resource type="PackedScene" uid="uid://bjll4hulbwb2t" path="res://scenes/components/auto_clicker/AutoClicker.tscn" id="2_ptr31"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="3_theme"]
 
 [node name="ActionButton" type="Button"]
 offset_right = 60.0
 offset_bottom = 40.0
+theme = ExtResource("3_theme")
 script = ExtResource("1_qamgn")
 
 [node name="NameLabel" type="Label" parent="."]
