@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dsppjvtfm0iqa"]
+[gd_scene load_steps=19 format=3 uid="uid://dsppjvtfm0iqa"]
 
 [ext_resource type="Script" uid="uid://cb4cmtxb2d70f" path="res://scenes/levels/base_level.gd" id="1_md458"]
 [ext_resource type="PackedScene" uid="uid://dfon2ykx74oiy" path="res://scenes/components/action_button/action_button.tscn" id="2_uk53i"]
@@ -12,6 +12,12 @@
 [ext_resource type="Resource" uid="uid://ch0336ogx401c" path="res://data/production_rules/ship_features_to_money.tres" id="9_j7gcg"]
 [ext_resource type="PackedScene" uid="uid://cbbobv6d7781w" path="res://scenes/UI/resource_hud/resource_hud.tscn" id="11_qhwlw"]
 [ext_resource type="PackedScene" uid="uid://cwojeee861rxk" path="res://scenes/UI/resource_hud/resource_row.tscn" id="12_0caop"]
+[ext_resource type="Script" uid="uid://c5afa1dx0ix0o" path="res://scripts/progression/progression_manager.gd" id="13_prog"]
+[ext_resource type="Script" uid="uid://dfqx0l3t0riih" path="res://scripts/progression/milestone.gd" id="14_mile"]
+[ext_resource type="Resource" path="res://data/milestones/reveal_bug_button.tres" id="15_m1"]
+[ext_resource type="Resource" path="res://data/milestones/reveal_generator.tres" id="16_m2"]
+[ext_resource type="Resource" path="res://data/milestones/reveal_commit_button.tres" id="17_m3"]
+[ext_resource type="Resource" path="res://data/milestones/reveal_ship_button.tres" id="18_m4"]
 
 [node name="BaseLevel" type="Control"]
 layout_mode = 3
@@ -52,6 +58,7 @@ resource_type = 1
 resource_per_click = 0.0
 action_cost_type = 1
 action_cost = 1.0
+hidden_on_start = true
 
 [node name="ActionButton3" parent="." instance=ExtResource("2_uk53i")]
 layout_mode = 0
@@ -64,6 +71,7 @@ action_id = "commit_button"
 unlock_cost = 50.0
 resource_per_click = 0.0
 action_cost = 50.0
+hidden_on_start = true
 
 [node name="ActionButton4" parent="." instance=ExtResource("2_uk53i")]
 layout_mode = 0
@@ -78,6 +86,7 @@ unlock_cost = 1.0
 resource_per_click = 0.0
 action_cost_type = 2
 action_cost = 1.0
+hidden_on_start = true
 
 [node name="PassiveGenerator" parent="." instance=ExtResource("3_ukglk")]
 layout_mode = 0
@@ -85,6 +94,7 @@ offset_left = 14.0
 offset_top = 203.0
 offset_right = 74.0
 offset_bottom = 233.0
+hidden_on_start = true
 
 [node name="UpgradeContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -103,6 +113,10 @@ layout_mode = 2
 [node name="ProductionSystem" type="Node" parent="."]
 script = ExtResource("5_o1chu")
 rules = Array[ExtResource("6_h4ce7")]([ExtResource("7_53c65"), ExtResource("8_43bxi"), ExtResource("9_j7gcg")])
+
+[node name="ProgressionManager" type="Node" parent="."]
+script = ExtResource("13_prog")
+milestones = Array[ExtResource("14_mile")]([ExtResource("15_m1"), ExtResource("16_m2"), ExtResource("17_m3"), ExtResource("18_m4")])
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Milestone" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/milestone.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = "reveal_ship_button"
+reveal_node_path = "ActionButton4"
+required_resource = 2
+required_amount = 5.0

@@ -4,6 +4,7 @@ extends Control
 @onready var upgrade_panel: UpgradePanel = $UpgradeContainer/UpgradePanel
 @onready var production_system: ProductionSystem = $ProductionSystem
 @onready var resource_hud: ResourceHUD = $UI/ResourceHUD
+@onready var progression_manager: ProgressionManager = $ProgressionManager
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -35,6 +36,10 @@ func _ready() -> void:
 
 	resource_hud.initialize(GameState, production_system)
 
+	# Initialize progression system
+	progression_manager.initialize(GameState, self)
+	progression_manager.node_revealed.connect(_on_node_revealed)
+
 	# Load saved game if exists
 	SaveManager.load_game()
 
@@ -55,6 +60,11 @@ func _on_upgrade_purchased(id: String) -> void:
 			# AutoClicker upgrade bought, enable related generators
 			print("AutoClicker unlocked")
 
+func _on_node_revealed(node_path: String) -> void:
+	var node = get_node_or_null(node_path)
+	if node and node.has_method("reveal"):
+		node.reveal()
+
 func _on_offline_progress(elapsed_seconds: float) -> void:
 	# Find all passive generators and calculate offline earnings
 	var generators := get_tree().get_nodes_in_group("passive_generators")
@@ -70,8 +80,8 @@ func _on_offline_progress(elapsed_seconds: float) -> void:
 			GameState.add_resource(gen.resource_type, earned)
 			print("[Offline] %s earned %.1f of %s" % [gen.action_id, earned, gen.resource_type])
 
-func _find_nodes_by_class(node: Node, class_name_str: String) -> Array:
-	var result := []
+func _find_nodes_by_class(node: Node, class_name_str: String) -> Array[Node]:
+	var result: Array[Node] = []
 	if node.get_class() == class_name_str or (node is PassiveGenerator):
 		result.append(node)
 	for child in node.get_children():

@@ -14,12 +14,17 @@ signal unlocked(action_id: String)
 @export var unlock_cost_type: ResourceTypes.ResourceType = ResourceTypes.ResourceType.LOC
 @export var unlock_cost: float = 20.0
 @export var unlocked_generator: bool = false
+@export var hidden_on_start: bool = false
 
 @onready var cost_label = $CostLabel
 @onready var timer: Timer = $Timer
 
 
 func _ready() -> void:
+	# Hide if configured to start hidden (for progressive unlock)
+	if hidden_on_start:
+		hide()
+
 	if not unlocked_generator:
 		disabled = true
 
@@ -35,6 +40,11 @@ func _ready() -> void:
 
 	# Register for save/load
 	SaveManager.register(self)
+
+func reveal() -> void:
+	show()
+	# Optional: add animation later
+	print("[PassiveGenerator] Revealed: %s" % action_id)
 
 func _exit_tree() -> void:
 	SaveManager.unregister(self)
