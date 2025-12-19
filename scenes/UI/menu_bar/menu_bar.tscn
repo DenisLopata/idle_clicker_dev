@@ -15,5 +15,4 @@ text = "Stats"
 [node name="OptionsButton" type="Button" parent="."]
 layout_mode = 2
 theme = ExtResource("2_theme")
-disabled = true
 text = "Options"

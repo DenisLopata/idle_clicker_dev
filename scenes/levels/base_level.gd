@@ -5,12 +5,12 @@ extends Control
 @onready var production_system: ProductionSystem = $ProductionSystem
 @onready var resource_hud: ResourceHUD = $UI/ResourceHUD
 @onready var progression_manager: ProgressionManager = $ProgressionManager
-@onready var reset_button: Button = $UI/ResetButton
 @onready var reset_confirm_dialog: ConfirmationDialog = $UI/ResetConfirmDialog
 @onready var menu_bar: GameMenuBar = $UI/MenuBar
 @onready var popup_overlay: PopupOverlay = $PopupOverlay
 
 const STATS_POPUP_CONTENT = preload("res://scenes/UI/stats_popup/stats_popup_content.tscn")
+const OPTIONS_POPUP_CONTENT = preload("res://scenes/UI/options_popup/options_popup_content.tscn")
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -46,12 +46,12 @@ func _ready() -> void:
 	progression_manager.initialize(GameState, self)
 	progression_manager.node_revealed.connect(_on_node_revealed)
 
-	# Wire up reset button
-	reset_button.pressed.connect(_on_reset_button_pressed)
+	# Wire up reset confirm dialog
 	reset_confirm_dialog.confirmed.connect(_on_reset_confirmed)
 
 	# Wire up menu bar
 	menu_bar.stats_pressed.connect(_on_stats_pressed)
+	menu_bar.options_pressed.connect(_on_options_pressed)
 
 	# Load saved game if exists
 	SaveManager.load_game()
@@ -101,12 +101,18 @@ func _find_nodes_by_class(node: Node, class_name_str: String) -> Array[Node]:
 		result.append_array(_find_nodes_by_class(child, class_name_str))
 	return result
 
-func _on_reset_button_pressed() -> void:
-	reset_confirm_dialog.popup_centered()
-
 func _on_reset_confirmed() -> void:
 	SaveManager.reset_game()
 
 func _on_stats_pressed() -> void:
 	var content = STATS_POPUP_CONTENT.instantiate()
 	popup_overlay.open(content, "Detailed Statistics")
+
+func _on_options_pressed() -> void:
+	var content = OPTIONS_POPUP_CONTENT.instantiate()
+	content.reset_requested.connect(_on_options_reset_requested)
+	popup_overlay.open(content, "Options")
+
+func _on_options_reset_requested() -> void:
+	popup_overlay.close()
+	reset_confirm_dialog.popup_centered()
