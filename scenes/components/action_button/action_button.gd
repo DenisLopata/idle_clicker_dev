@@ -4,6 +4,8 @@ class_name ActionButton
 signal unlocked(action_id: String)
 signal performed(action_id: String)
 
+const FLOATING_TEXT_SCENE = preload("res://scenes/components/floating_text/floating_text.tscn")
+
 @export var action_id: String = ""
 
 @export var unlock_cost_type:  ResourceTypes.ResourceType = ResourceTypes.ResourceType.LOC
@@ -35,6 +37,7 @@ func _ready() -> void:
 
 	_update_visual_state()
 	_update_cost_label()
+	_update_tooltip()
 
 	name_label.text = action_id
 
@@ -50,15 +53,16 @@ func _on_pressed() -> void:
 		return
 
 	# Perform action
-	#GameState.add_resource(resource_type, resource_per_click)
 	if action_cost > 0.0:
 		if GameState.get_resource(action_cost_type) < action_cost:
 			return
 
 		GameState.add_resource(action_cost_type, -action_cost)
+		_spawn_floating_text(-action_cost, action_cost_type)
 
 	if resource_per_click != 0.0:
 		GameState.add_resource(resource_type, resource_per_click)
+		_spawn_floating_text(resource_per_click, resource_type)
 	performed.emit(action_id)
 
 
@@ -71,6 +75,7 @@ func _try_unlock() -> void:
 
 		_update_visual_state()
 		_update_cost_label()
+		_update_tooltip()
 
 
 func _on_resource_changed(type: int, _new_value: float) -> void:
@@ -103,3 +108,32 @@ func _update_cost_label() -> void:
 	if cost_label and not unlocked_action:
 		var type_txt: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
 		cost_label.text = "Cost: %d %s" % [unlock_cost, str(type_txt)]
+
+func _update_tooltip() -> void:
+	var lines := []
+
+	if not unlocked_action:
+		var cost_type: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
+		lines.append("Unlock for %d %s" % [int(unlock_cost), cost_type])
+	else:
+		if resource_per_click > 0:
+			var res_type: String = ResourceTypes.ResourceType.keys()[resource_type]
+			lines.append("+%d %s per click" % [int(resource_per_click), str(res_type)])
+		if action_cost > 0:
+			var cost_type: String = ResourceTypes.ResourceType.keys()[action_cost_type]
+			lines.append("Costs %d %s" % [int(action_cost), cost_type])
+
+	tooltip_text = "\n".join(lines)
+
+func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> void:
+	var floating := FLOATING_TEXT_SCENE.instantiate() as FloatingText
+	get_tree().root.add_child(floating)
+
+	var prefix := "+" if amount > 0 else ""
+	var type_name: String = ResourceTypes.ResourceType.keys()[type]
+	var display_text := "%s%d %s" % [prefix, int(amount), type_name]
+	var color := ResourceTypes.get_color(type)
+
+	# Spawn above the button
+	var spawn_pos := global_position + Vector2(size.x / 2, 0)
+	floating.setup(display_text, color, spawn_pos)

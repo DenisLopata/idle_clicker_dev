@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://floating_text_scene"]
+
+[ext_resource type="Script" path="res://scenes/components/floating_text/floating_text.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="2_theme"]
+
+[node name="FloatingText" type="Label"]
+z_index = 100
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")

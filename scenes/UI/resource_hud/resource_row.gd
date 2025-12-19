@@ -2,11 +2,26 @@ extends HBoxContainer
 class_name ResourceRow
 
 var resource_type: ResourceTypes.ResourceType
+var discovered: bool = false
 
 @onready var name_label: Label = $Name
 @onready var amount_label: Label = $Amount
 @onready var rate_label: Label = $Rate
 @onready var efficiency_label: Label = $Efficiency
+
+func setup(type: ResourceTypes.ResourceType, start_hidden: bool = true) -> void:
+	resource_type = type
+	var color := ResourceTypes.get_color(type)
+	name_label.modulate = color
+	amount_label.modulate = color
+
+	if start_hidden:
+		hide()
+
+func reveal() -> void:
+	if not discovered:
+		discovered = true
+		show()
 
 func set_amount(value: float) -> void:
 	amount_label.text = str(int(value))

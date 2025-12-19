@@ -3,6 +3,8 @@ class_name PassiveGenerator
 
 signal unlocked(action_id: String)
 
+const FLOATING_TEXT_SCENE = preload("res://scenes/components/floating_text/floating_text.tscn")
+
 @export var action_id: String = "gen_1"
 
 # What resource this generator produces
@@ -37,6 +39,7 @@ func _ready() -> void:
 
 	_update_visual_state()
 	_update_cost_label()
+	_update_tooltip()
 
 	# Register for save/load
 	SaveManager.register(self)
@@ -68,6 +71,7 @@ func _try_unlock() -> void:
 
 		_update_visual_state()
 		_update_cost_label()
+		_update_tooltip()
 
 
 func _on_resource_changed(type: int, _new_value: float) -> void:
@@ -96,10 +100,34 @@ func _update_cost_label() -> void:
 	else:
 		cost_label.text = "+%d / %.1fs" % [resource_per_tick, tick_interval]
 
+func _update_tooltip() -> void:
+	var res_type: String = ResourceTypes.ResourceType.keys()[resource_type]
+
+	if not unlocked_generator:
+		var cost_type: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
+		tooltip_text = "Unlock for %d %s\nProduces +%d %s every %.1fs" % [
+			int(unlock_cost), cost_type, int(resource_per_tick), res_type, tick_interval
+		]
+	else:
+		tooltip_text = "Produces +%d %s every %.1fs" % [int(resource_per_tick), res_type, tick_interval]
 
 func _on_tick() -> void:
 	if unlocked_generator:
 		GameState.add_resource(resource_type, resource_per_tick)
+		_spawn_floating_text(resource_per_tick, resource_type)
+
+func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> void:
+	var floating := FLOATING_TEXT_SCENE.instantiate() as FloatingText
+	get_tree().root.add_child(floating)
+
+	var prefix := "+" if amount > 0 else ""
+	var type_name: String = ResourceTypes.ResourceType.keys()[type]
+	var display_text := "%s%d %s" % [prefix, int(amount), type_name]
+	var color := ResourceTypes.get_color(type)
+
+	# Spawn above the generator
+	var spawn_pos := global_position + Vector2(size.x / 2, 0)
+	floating.setup(display_text, color, spawn_pos)
 
 # Save/Load interface
 func get_save_data() -> Dictionary:
@@ -114,3 +142,4 @@ func load_save_data(data: Dictionary) -> void:
 		timer.start()
 		_update_visual_state()
 		_update_cost_label()
+		_update_tooltip()

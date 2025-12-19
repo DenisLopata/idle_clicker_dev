@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cwojeee861rxk" path="res://scenes/UI/resource_hud/resource_row.tscn" id="12_0caop"]
 [ext_resource type="Script" uid="uid://c5afa1dx0ix0o" path="res://scripts/progression/progression_manager.gd" id="13_prog"]
 [ext_resource type="Script" uid="uid://dfqx0l3t0riih" path="res://scripts/progression/milestone.gd" id="14_mile"]
-[ext_resource type="Resource" path="res://data/milestones/reveal_bug_button.tres" id="15_m1"]
+[ext_resource type="Resource" uid="uid://4gek2negs56h" path="res://data/milestones/reveal_bug_button.tres" id="15_m1"]
 [ext_resource type="Resource" path="res://data/milestones/reveal_generator.tres" id="16_m2"]
 [ext_resource type="Resource" path="res://data/milestones/reveal_commit_button.tres" id="17_m3"]
 [ext_resource type="Resource" path="res://data/milestones/reveal_ship_button.tres" id="18_m4"]
@@ -40,7 +40,6 @@ offset_left = 140.0
 offset_top = 41.0
 offset_right = 200.0
 offset_bottom = 81.0
-theme = ExtResource("3_j7gcg")
 theme_type_variation = &"FlatButton"
 action_id = "loc_button"
 unlock_cost = 0.0
@@ -52,7 +51,6 @@ offset_left = 142.0
 offset_top = 92.0
 offset_right = 202.0
 offset_bottom = 132.0
-theme = ExtResource("3_j7gcg")
 action_id = "bug_button"
 resource_type = 1
 resource_per_click = 0.0
@@ -66,7 +64,6 @@ offset_left = 145.0
 offset_top = 148.0
 offset_right = 205.0
 offset_bottom = 188.0
-theme = ExtResource("3_j7gcg")
 action_id = "commit_button"
 unlock_cost = 50.0
 resource_per_click = 0.0
@@ -79,7 +76,6 @@ offset_left = 153.0
 offset_top = 210.0
 offset_right = 213.0
 offset_bottom = 250.0
-theme = ExtResource("3_j7gcg")
 action_id = "ship_button"
 unlock_cost_type = 2
 unlock_cost = 1.0
