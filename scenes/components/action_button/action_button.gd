@@ -7,6 +7,7 @@ signal performed(action_id: String)
 const FLOATING_TEXT_SCENE = preload("res://scenes/components/floating_text/floating_text.tscn")
 
 @export var action_id: String = ""
+@export var display_name: String = ""
 
 @export var unlock_cost_type:  ResourceTypes.ResourceType = ResourceTypes.ResourceType.LOC
 @export var unlock_cost: float = 10.0
@@ -39,7 +40,7 @@ func _ready() -> void:
 	_update_cost_label()
 	_update_tooltip()
 
-	name_label.text = action_id
+	name_label.text = display_name if display_name else action_id
 
 func reveal() -> void:
 	show()
@@ -107,21 +108,21 @@ func _update_visual_state() -> void:
 func _update_cost_label() -> void:
 	if cost_label and not unlocked_action:
 		var type_txt: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
-		cost_label.text = "Cost: %d %s" % [unlock_cost, str(type_txt)]
+		cost_label.text = "Cost: %s %s" % [NumberFormat.format(unlock_cost), type_txt]
 
 func _update_tooltip() -> void:
 	var lines := []
 
 	if not unlocked_action:
 		var cost_type: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
-		lines.append("Unlock for %d %s" % [int(unlock_cost), cost_type])
+		lines.append("Unlock for %s %s" % [NumberFormat.format(unlock_cost), cost_type])
 	else:
 		if resource_per_click > 0:
 			var res_type: String = ResourceTypes.ResourceType.keys()[resource_type]
-			lines.append("+%d %s per click" % [int(resource_per_click), str(res_type)])
+			lines.append("+%s %s per click" % [NumberFormat.format(resource_per_click), res_type])
 		if action_cost > 0:
 			var cost_type: String = ResourceTypes.ResourceType.keys()[action_cost_type]
-			lines.append("Costs %d %s" % [int(action_cost), cost_type])
+			lines.append("Costs %s %s" % [NumberFormat.format(action_cost), cost_type])
 
 	tooltip_text = "\n".join(lines)
 
@@ -131,7 +132,7 @@ func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> vo
 
 	var prefix := "+" if amount > 0 else ""
 	var type_name: String = ResourceTypes.ResourceType.keys()[type]
-	var display_text := "%s%d %s" % [prefix, int(amount), type_name]
+	var display_text := "%s%s %s" % [prefix, NumberFormat.format(absf(amount)), type_name]
 	var color := ResourceTypes.get_color(type)
 
 	# Spawn above the button

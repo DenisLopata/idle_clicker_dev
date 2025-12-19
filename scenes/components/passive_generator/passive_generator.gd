@@ -6,6 +6,7 @@ signal unlocked(action_id: String)
 const FLOATING_TEXT_SCENE = preload("res://scenes/components/floating_text/floating_text.tscn")
 
 @export var action_id: String = "gen_1"
+@export var display_name: String = ""
 
 # What resource this generator produces
 @export var resource_type: ResourceTypes.ResourceType = ResourceTypes.ResourceType.LOC
@@ -19,6 +20,7 @@ const FLOATING_TEXT_SCENE = preload("res://scenes/components/floating_text/float
 @export var hidden_on_start: bool = false
 
 @onready var cost_label = $CostLabel
+@onready var title_label = $TitleLabel
 @onready var timer: Timer = $Timer
 
 
@@ -40,6 +42,8 @@ func _ready() -> void:
 	_update_visual_state()
 	_update_cost_label()
 	_update_tooltip()
+
+	title_label.text = display_name if display_name else action_id
 
 	# Register for save/load
 	SaveManager.register(self)
@@ -96,20 +100,20 @@ func _update_visual_state() -> void:
 
 func _update_cost_label() -> void:
 	if not unlocked_generator:
-		cost_label.text = "Unlock: %d" % unlock_cost
+		cost_label.text = "Unlock: %s" % NumberFormat.format(unlock_cost)
 	else:
-		cost_label.text = "+%d / %.1fs" % [resource_per_tick, tick_interval]
+		cost_label.text = "+%s / %.1fs" % [NumberFormat.format(resource_per_tick), tick_interval]
 
 func _update_tooltip() -> void:
 	var res_type: String = ResourceTypes.ResourceType.keys()[resource_type]
 
 	if not unlocked_generator:
 		var cost_type: String = ResourceTypes.ResourceType.keys()[unlock_cost_type]
-		tooltip_text = "Unlock for %d %s\nProduces +%d %s every %.1fs" % [
-			int(unlock_cost), cost_type, int(resource_per_tick), res_type, tick_interval
+		tooltip_text = "Unlock for %s %s\nProduces +%s %s every %.1fs" % [
+			NumberFormat.format(unlock_cost), cost_type, NumberFormat.format(resource_per_tick), res_type, tick_interval
 		]
 	else:
-		tooltip_text = "Produces +%d %s every %.1fs" % [int(resource_per_tick), res_type, tick_interval]
+		tooltip_text = "Produces +%s %s every %.1fs" % [NumberFormat.format(resource_per_tick), res_type, tick_interval]
 
 func _on_tick() -> void:
 	if unlocked_generator:
@@ -122,7 +126,7 @@ func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> vo
 
 	var prefix := "+" if amount > 0 else ""
 	var type_name: String = ResourceTypes.ResourceType.keys()[type]
-	var display_text := "%s%d %s" % [prefix, int(amount), type_name]
+	var display_text := "%s%s %s" % [prefix, NumberFormat.format(absf(amount)), type_name]
 	var color := ResourceTypes.get_color(type)
 
 	# Spawn above the generator

@@ -24,13 +24,10 @@ func reveal() -> void:
 		show()
 
 func set_amount(value: float) -> void:
-	amount_label.text = str(int(value))
+	amount_label.text = NumberFormat.format(value)
 
 func set_rate(value: float) -> void:
-	if value > 0:
-		rate_label.text = "+%.1f/s" % value
-	else:
-		rate_label.text = ""
+	rate_label.text = NumberFormat.format_rate(value)
 
 func set_efficiency(value: float) -> void:
 	efficiency_label.text = "%d%%" % int(value * 100)
