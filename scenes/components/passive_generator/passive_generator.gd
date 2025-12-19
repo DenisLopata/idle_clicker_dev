@@ -49,8 +49,16 @@ func _ready() -> void:
 	SaveManager.register(self)
 
 func reveal() -> void:
+	# Animate reveal: fade in and scale up
+	modulate.a = 0.0
+	scale = Vector2(0.5, 0.5)
 	show()
-	# Optional: add animation later
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "modulate:a", 1.0, 0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
 	print("[PassiveGenerator] Revealed: %s" % action_id)
 
 func _exit_tree() -> void:
@@ -119,6 +127,7 @@ func _on_tick() -> void:
 	if unlocked_generator:
 		GameState.add_resource(resource_type, resource_per_tick)
 		_spawn_floating_text(resource_per_tick, resource_type)
+		_play_pulse_animation()
 
 func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> void:
 	var floating := FLOATING_TEXT_SCENE.instantiate() as FloatingText
@@ -147,3 +156,8 @@ func load_save_data(data: Dictionary) -> void:
 		_update_visual_state()
 		_update_cost_label()
 		_update_tooltip()
+
+func _play_pulse_animation() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_ease(Tween.EASE_OUT)

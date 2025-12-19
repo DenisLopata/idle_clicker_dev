@@ -21,7 +21,16 @@ func setup(type: ResourceTypes.ResourceType, start_hidden: bool = true) -> void:
 func reveal() -> void:
 	if not discovered:
 		discovered = true
+
+		# Animate reveal: slide in from left and fade in
+		modulate.a = 0.0
+		position.x -= 30
 		show()
+
+		var tween := create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(self, "modulate:a", 1.0, 0.2).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "position:x", position.x + 30, 0.2).set_ease(Tween.EASE_OUT)
 
 func set_amount(value: float) -> void:
 	amount_label.text = NumberFormat.format(value)

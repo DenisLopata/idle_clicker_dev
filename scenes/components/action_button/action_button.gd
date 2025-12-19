@@ -43,8 +43,16 @@ func _ready() -> void:
 	name_label.text = display_name if display_name else action_id
 
 func reveal() -> void:
+	# Animate reveal: fade in and scale up
+	modulate.a = 0.0
+	scale = Vector2(0.5, 0.5)
 	show()
-	# Optional: add animation later
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "modulate:a", 1.0, 0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
 	print("[ActionButton] Revealed: %s" % action_id)
 
 
@@ -56,6 +64,7 @@ func _on_pressed() -> void:
 	# Perform action
 	if action_cost > 0.0:
 		if GameState.get_resource(action_cost_type) < action_cost:
+			_play_reject_animation()
 			return
 
 		GameState.add_resource(action_cost_type, -action_cost)
@@ -64,6 +73,8 @@ func _on_pressed() -> void:
 	if resource_per_click != 0.0:
 		GameState.add_resource(resource_type, resource_per_click)
 		_spawn_floating_text(resource_per_click, resource_type)
+
+	_play_press_animation()
 	performed.emit(action_id)
 
 
@@ -138,3 +149,15 @@ func _spawn_floating_text(amount: float, type: ResourceTypes.ResourceType) -> vo
 	# Spawn above the button
 	var spawn_pos := global_position + Vector2(size.x / 2, 0)
 	floating.setup(display_text, color, spawn_pos)
+
+func _play_press_animation() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.05)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_ease(Tween.EASE_OUT)
+
+func _play_reject_animation() -> void:
+	var tween := create_tween()
+	var original_x := position.x
+	tween.tween_property(self, "position:x", original_x - 5, 0.05)
+	tween.tween_property(self, "position:x", original_x + 5, 0.05)
+	tween.tween_property(self, "position:x", original_x, 0.05)
