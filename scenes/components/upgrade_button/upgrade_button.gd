@@ -43,15 +43,15 @@ func _update_visual_state() -> void:
 	if upgrade.purchased:
 		cost_label.text = "Purchased"
 		disabled = true
-		modulate = Color(0.8, 1.0, 0.8)
+		modulate = ThemeColors.UNLOCKED
 		return
 
 	# Update cost label
-	cost_label.text = "Cost: %d" % upgrade.cost
+	cost_label.text = "Cost: %s %s" % [NumberFormat.format(upgrade.cost), ResourceTypes.get_type_name(cost_type)]
 
 	# Visual feedback for affordability
 	var available := GameState.get_resource(cost_type)
 	if available >= upgrade.cost:
-		modulate = Color(1, 1, 1)
+		modulate = ThemeColors.AFFORDABLE
 	else:
-		modulate = Color(0.6, 0.6, 0.6)
+		modulate = ThemeColors.NOT_AFFORDABLE

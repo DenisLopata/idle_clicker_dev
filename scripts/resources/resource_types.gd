@@ -21,3 +21,6 @@ const COLORS: Dictionary = {
 
 static func get_color(type: ResourceType) -> Color:
 	return COLORS.get(type, Color.WHITE)
+
+static func get_type_name(type: ResourceType) -> String:
+	return ResourceType.keys()[type]

@@ -32,7 +32,7 @@ func _create_row(rtype: ResourceTypes.ResourceType) -> void:
 	container.add_child(row)
 
 	row.setup(rtype, true)  # start hidden
-	row.name_label.text = ResourceTypes.ResourceType.keys()[rtype]
+	row.name_label.text = ResourceTypes.get_type_name(rtype)
 	row.set_amount(_game_state.get_resource(rtype))
 	row.efficiency_label.text = ""
 

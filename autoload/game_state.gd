@@ -1,16 +1,3 @@
-#extends Node
-#
-## Simple example resource (e.g., "points", "gold", "code", whatever)
-#var resource_amount: float = 0.0
-#
-#signal resource_changed(new_value: float)
-#
-#func add_resource(amount: float) -> void:
-	#resource_amount += amount
-	#resource_changed.emit(resource_amount)
-#
-#func get_resource() -> float:
-	#return resource_amount
 extends Node
 
 signal resource_changed(resource_type: int, new_value: float)
