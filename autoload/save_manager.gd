@@ -108,8 +108,9 @@ func delete_save() -> void:
 
 func reset_game() -> void:
 	delete_save()
-	# Reset GameState (autoload persists across scene reloads)
+	# Reset autoloads (they persist across scene reloads)
 	GameState.reset()
+	GameStats.reset()
 	# Clear saveables (they'll re-register after scene reload)
 	_saveables.clear()
 	# Reload the current scene to reset all state

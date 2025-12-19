@@ -7,6 +7,10 @@ extends Control
 @onready var progression_manager: ProgressionManager = $ProgressionManager
 @onready var reset_button: Button = $UI/ResetButton
 @onready var reset_confirm_dialog: ConfirmationDialog = $UI/ResetConfirmDialog
+@onready var menu_bar: GameMenuBar = $UI/MenuBar
+@onready var popup_overlay: PopupOverlay = $PopupOverlay
+
+const STATS_POPUP_CONTENT = preload("res://scenes/UI/stats_popup/stats_popup_content.tscn")
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -45,6 +49,9 @@ func _ready() -> void:
 	# Wire up reset button
 	reset_button.pressed.connect(_on_reset_button_pressed)
 	reset_confirm_dialog.confirmed.connect(_on_reset_confirmed)
+
+	# Wire up menu bar
+	menu_bar.stats_pressed.connect(_on_stats_pressed)
 
 	# Load saved game if exists
 	SaveManager.load_game()
@@ -99,3 +106,7 @@ func _on_reset_button_pressed() -> void:
 
 func _on_reset_confirmed() -> void:
 	SaveManager.reset_game()
+
+func _on_stats_pressed() -> void:
+	var content = STATS_POPUP_CONTENT.instantiate()
+	popup_overlay.open(content, "Detailed Statistics")

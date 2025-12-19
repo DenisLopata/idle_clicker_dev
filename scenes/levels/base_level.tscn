@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dsppjvtfm0iqa"]
+[gd_scene load_steps=22 format=3 uid="uid://dsppjvtfm0iqa"]
 
 [ext_resource type="Script" uid="uid://cb4cmtxb2d70f" path="res://scenes/levels/base_level.gd" id="1_md458"]
 [ext_resource type="PackedScene" uid="uid://dfon2ykx74oiy" path="res://scenes/components/action_button/action_button.tscn" id="2_uk53i"]
@@ -18,6 +18,9 @@
 [ext_resource type="Resource" path="res://data/milestones/reveal_generator.tres" id="16_m2"]
 [ext_resource type="Resource" path="res://data/milestones/reveal_commit_button.tres" id="17_m3"]
 [ext_resource type="Resource" path="res://data/milestones/reveal_ship_button.tres" id="18_m4"]
+[ext_resource type="PackedScene" path="res://scenes/UI/stats_panel/stats_panel.tscn" id="19_stats"]
+[ext_resource type="PackedScene" path="res://scenes/UI/menu_bar/menu_bar.tscn" id="20_menu"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_overlay.tscn" id="21_popup"]
 
 [node name="BaseLevel" type="Control"]
 layout_mode = 3
@@ -147,3 +150,26 @@ size = Vector2i(300, 100)
 theme = ExtResource("3_j7gcg")
 ok_button_text = "Reset"
 dialog_text = "Are you sure you want to reset all progress? This cannot be undone."
+
+[node name="StatsPanel" parent="UI" instance=ExtResource("19_stats")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -180.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MenuBar" parent="UI" instance=ExtResource("20_menu")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -56.0
+offset_right = 108.0
+offset_bottom = -36.0
+grow_vertical = 0
+
+[node name="PopupOverlay" parent="." instance=ExtResource("21_popup")]

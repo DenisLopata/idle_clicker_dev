@@ -24,7 +24,12 @@ func add_resource(type: int, amount: float) -> void:
 		printerr("Unknown resource type: ", type)
 		return
 
+	# Track positive earnings for stats
+	if amount > 0:
+		GameStats.record_earned(type, amount)
+
 	resources[type].add(amount)
+	GameStats.update_peak(type, resources[type].amount)
 	resource_changed.emit(type, resources[type].amount)
 
 

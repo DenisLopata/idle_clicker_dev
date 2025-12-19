@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/UI/menu_bar/menu_bar.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="2_theme"]
+
+[node name="MenuBar" type="HBoxContainer"]
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="StatsButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Stats"
+
+[node name="OptionsButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_theme")
+disabled = true
+text = "Options"

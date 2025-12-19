@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1djh8k03080x"]
+
+[ext_resource type="Script" uid="uid://b7yoxfci20qg7" path="res://scenes/UI/stats_panel/stats_panel.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="2_theme"]
+
+[node name="StatsPanel" type="VBoxContainer"]
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Statistics"
+
+[node name="Separator1" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="ClicksRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ClicksRow"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Clicks:"
+
+[node name="Value" type="Label" parent="ClicksRow"]
+layout_mode = 2
+text = "0"
+
+[node name="PlaytimeRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlaytimeRow"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Playtime:"
+
+[node name="Value" type="Label" parent="PlaytimeRow"]
+layout_mode = 2
+text = "0m 0s"
+
+[node name="Separator2" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="EarnedTitle" type="Label" parent="."]
+layout_mode = 2
+text = "Total Earned"
+
+[node name="EarnedContainer" type="VBoxContainer" parent="."]
+layout_mode = 2

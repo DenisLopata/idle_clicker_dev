@@ -50,6 +50,9 @@ func _on_pressed() -> void:
 		_try_unlock()
 		return
 
+	GameStats.record_click()
+	GameStats.record_action(action_id)
+
 	# Perform action
 	if action_cost > 0.0:
 		if GameState.get_resource(action_cost_type) < action_cost:
