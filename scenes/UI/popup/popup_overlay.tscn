@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(150, 80)
+custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 theme = ExtResource("2_theme")
 
@@ -56,8 +56,8 @@ text = "X"
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
-custom_maximum_size = Vector2(400, 320)
+custom_minimum_size = Vector2(280, 250)
+custom_maximum_size = Vector2(300, 280)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0

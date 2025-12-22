@@ -11,17 +11,17 @@ offset_bottom = 360.0
 color = Color(0.102, 0.102, 0.18, 1)
 
 [node name="Desk" type="ColorRect" parent="."]
-offset_left = 50.0
-offset_top = 300.0
-offset_right = 250.0
-offset_bottom = 340.0
+offset_left = 220.0
+offset_top = 250.0
+offset_right = 420.0
+offset_bottom = 290.0
 color = Color(0.361, 0.251, 0.2, 1)
 
 [node name="Monitor" type="ColorRect" parent="."]
-offset_left = 100.0
-offset_top = 240.0
-offset_right = 160.0
-offset_bottom = 300.0
+offset_left = 270.0
+offset_top = 190.0
+offset_right = 330.0
+offset_bottom = 250.0
 color = Color(0.176, 0.176, 0.176, 1)
 
 [node name="Screen" type="ColorRect" parent="Monitor"]
@@ -33,14 +33,14 @@ offset_bottom = 50.0
 color = Color(0.059, 0.22, 0.059, 1)
 
 [node name="MonitorStand" type="ColorRect" parent="."]
-offset_left = 120.0
-offset_top = 300.0
-offset_right = 140.0
-offset_bottom = 310.0
+offset_left = 290.0
+offset_top = 250.0
+offset_right = 310.0
+offset_bottom = 260.0
 color = Color(0.176, 0.176, 0.176, 1)
 
 [node name="Programmer" type="Node2D" parent="."]
-position = Vector2(70, 268)
+position = Vector2(240, 218)
 
 [node name="Body" type="ColorRect" parent="Programmer"]
 offset_right = 32.0
