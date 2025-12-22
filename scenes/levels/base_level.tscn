@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dsppjvtfm0iqa"]
+[gd_scene load_steps=23 format=3 uid="uid://dsppjvtfm0iqa"]
 
 [ext_resource type="Script" uid="uid://cb4cmtxb2d70f" path="res://scenes/levels/base_level.gd" id="1_md458"]
 [ext_resource type="PackedScene" uid="uid://dfon2ykx74oiy" path="res://scenes/components/action_button/action_button.tscn" id="2_uk53i"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/stats_panel/stats_panel.tscn" id="19_stats"]
 [ext_resource type="PackedScene" path="res://scenes/UI/menu_bar/menu_bar.tscn" id="20_menu"]
 [ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_overlay.tscn" id="21_popup"]
+[ext_resource type="PackedScene" path="res://scenes/background/programmer_scene.tscn" id="22_prog"]
 
 [node name="BaseLevel" type="Control"]
 layout_mode = 3
@@ -30,6 +31,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_md458")
+
+[node name="ProgrammerScene" parent="." instance=ExtResource("22_prog")]
 
 [node name="ResourceLabel" type="Label" parent="."]
 visible = false

@@ -24,6 +24,8 @@ signal performed(action_id: String)
 
 
 func _ready() -> void:
+	add_to_group("action_buttons")
+
 	# Hide if configured to start hidden (for progressive unlock)
 	if hidden_on_start:
 		hide()
