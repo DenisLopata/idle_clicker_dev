@@ -4,7 +4,8 @@ class_name PopupOverlay
 signal closed
 
 @onready var background: ColorRect = $Background
-@onready var content_container: VBoxContainer = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ContentContainer
+@onready var scroll_container: ScrollContainer = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer
+@onready var content_container: VBoxContainer = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ContentContainer
 @onready var panel_container: PanelContainer = $CenterContainer/PanelContainer
 @onready var title_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HeaderRow/TitleLabel
 @onready var close_button: Button = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HeaderRow/CloseButton
@@ -14,6 +15,11 @@ func _ready() -> void:
 	close_button.pressed.connect(close)
 	hide()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		close()
+		get_viewport().set_input_as_handled()
+
 func open(content: Control, title: String = "") -> void:
 	# Clear any existing content
 	for child in content_container.get_children():
@@ -22,6 +28,9 @@ func open(content: Control, title: String = "") -> void:
 	# Add new content
 	content_container.add_child(content)
 	title_label.text = title
+
+	# Reset scroll to top
+	scroll_container.scroll_vertical = 0
 
 	# Show and animate
 	show()

@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme = ExtResource("2_theme")
 
@@ -47,7 +47,7 @@ theme = ExtResource("2_theme")
 text = "Popup Title"
 
 [node name="CloseButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HeaderRow"]
-custom_minimum_size = Vector2(16, 16)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 theme = ExtResource("2_theme")
 text = "X"
@@ -55,6 +55,14 @@ text = "X"
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+custom_maximum_size = Vector2(400, 320)
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ContentContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
