@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="1_theme"]
+
+[node name="ActionPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(90, 0)
+theme = ExtResource("1_theme")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ActionList" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4

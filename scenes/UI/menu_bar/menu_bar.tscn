@@ -12,6 +12,11 @@ layout_mode = 2
 theme = ExtResource("2_theme")
 text = "Stats"
 
+[node name="UpgradesButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Upgrades"
+
 [node name="OptionsButton" type="Button" parent="."]
 layout_mode = 2
 theme = ExtResource("2_theme")

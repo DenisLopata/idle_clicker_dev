@@ -123,14 +123,17 @@ func _get_spawn_position() -> Vector2:
 # Save/Load interface
 func get_save_data() -> Dictionary:
 	return {
-		"unlocked": unlocked_generator
+		"unlocked": unlocked_generator,
+		"revealed": visible
 	}
 
 func load_save_data(data: Dictionary) -> void:
+	if data.has("revealed") and data["revealed"]:
+		show()
 	if data.has("unlocked") and data["unlocked"]:
 		unlocked_generator = true
 		disabled = false
 		timer.start()
-		_update_visual_state()
-		_update_cost_label()
-		_update_tooltip()
+	_update_visual_state()
+	_update_cost_label()
+	_update_tooltip()

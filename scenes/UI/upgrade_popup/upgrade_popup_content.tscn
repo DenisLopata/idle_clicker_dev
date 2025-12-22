@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/UI/upgrade_popup/upgrade_popup_content.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="2_theme"]
+
+[node name="UpgradePopupContent" type="VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")

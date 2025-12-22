@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_script")
 id = "reveal_generator"
-reveal_node_path = "PassiveGenerator"
+reveal_node_path = "ActionPanel/MarginContainer/ActionList/PassiveGenerator"
 required_resource = 0
 required_amount = 50.0

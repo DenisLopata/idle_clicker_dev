@@ -26,6 +26,9 @@ signal performed(action_id: String)
 func _ready() -> void:
 	add_to_group("action_buttons")
 
+	# Register for save/load
+	SaveManager.register(self)
+
 	# Hide if configured to start hidden (for progressive unlock)
 	if hidden_on_start:
 		hide()
@@ -41,6 +44,24 @@ func _ready() -> void:
 	_update_tooltip()
 
 	name_label.text = display_name if display_name else action_id
+
+func _exit_tree() -> void:
+	SaveManager.unregister(self)
+
+func get_save_data() -> Dictionary:
+	return {
+		"unlocked": unlocked_action,
+		"revealed": visible
+	}
+
+func load_save_data(data: Dictionary) -> void:
+	if data.has("unlocked"):
+		unlocked_action = data["unlocked"]
+	if data.has("revealed") and data["revealed"]:
+		show()
+	_update_visual_state()
+	_update_cost_label()
+	_update_tooltip()
 
 func reveal() -> void:
 	AnimationHelper.play_reveal(self)

@@ -5,7 +5,8 @@
 [ext_resource type="Theme" uid="uid://ci8nn6qjjfjll" path="res://assets/themes/base_button.tres" id="3_theme"]
 
 [node name="ActionButton" type="Button"]
-offset_right = 60.0
+custom_minimum_size = Vector2(70, 40)
+offset_right = 70.0
 offset_bottom = 40.0
 theme = ExtResource("3_theme")
 script = ExtResource("1_qamgn")

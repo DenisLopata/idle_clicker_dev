@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_script")
 id = "reveal_ship_button"
-reveal_node_path = "ActionButton4"
+reveal_node_path = "ActionPanel/MarginContainer/ActionList/ActionButton4"
 required_resource = 2
 required_amount = 5.0

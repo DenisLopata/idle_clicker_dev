@@ -1,7 +1,6 @@
 extends Control
 
 @onready var resource_label: Label = $ResourceLabel
-@onready var upgrade_panel: UpgradePanel = $UpgradeContainer/UpgradePanel
 @onready var production_system: ProductionSystem = $ProductionSystem
 @onready var resource_hud: ResourceHUD = $UI/ResourceHUD
 @onready var progression_manager: ProgressionManager = $ProgressionManager
@@ -11,6 +10,7 @@ extends Control
 
 const STATS_POPUP_CONTENT = preload("res://scenes/UI/stats_popup/stats_popup_content.tscn")
 const OPTIONS_POPUP_CONTENT = preload("res://scenes/UI/options_popup/options_popup_content.tscn")
+const UPGRADE_POPUP_CONTENT = preload("res://scenes/UI/upgrade_popup/upgrade_popup_content.tscn")
 
 # Amount added per click (generic)
 @export var click_value: float = 1.0
@@ -28,13 +28,6 @@ func _ready() -> void:
 	for type in ResourceTypes.ResourceType.values():
 		_on_resource_changed(type, GameState.get_resource(type))
 
-	# Add upgrades
-	for upg in upgrades_data:
-		upgrade_panel.add_upgrade(upg)
-
-	# Listen to upgrade purchases
-	upgrade_panel.upgrade_purchased.connect(_on_upgrade_purchased)
-
 	# Listen for offline progress
 	SaveManager.offline_progress_calculated.connect(_on_offline_progress)
 
@@ -51,6 +44,7 @@ func _ready() -> void:
 
 	# Wire up menu bar
 	menu_bar.stats_pressed.connect(_on_stats_pressed)
+	menu_bar.upgrades_pressed.connect(_on_upgrades_pressed)
 	menu_bar.options_pressed.connect(_on_options_pressed)
 
 	# Load saved game if exists
@@ -107,6 +101,12 @@ func _on_reset_confirmed() -> void:
 func _on_stats_pressed() -> void:
 	var content = STATS_POPUP_CONTENT.instantiate()
 	popup_overlay.open(content, "Detailed Statistics")
+
+func _on_upgrades_pressed() -> void:
+	var content = UPGRADE_POPUP_CONTENT.instantiate()
+	content.setup(upgrades_data)
+	content.upgrade_purchased.connect(_on_upgrade_purchased)
+	popup_overlay.open(content, "Upgrades")
 
 func _on_options_pressed() -> void:
 	var content = OPTIONS_POPUP_CONTENT.instantiate()
